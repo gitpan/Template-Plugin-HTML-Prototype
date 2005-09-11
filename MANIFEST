@@ -1,7 +1,16 @@
+Build.PL
 Changes
-Makefile.PL
 MANIFEST
-META.yml
-lib/Template/Plugin/HTML/Prototype.pm
+MANIFEST.SKIP
+META.yml # Will be created by "make dist"
 README
-t/1.t
+lib/Template/Plugin/HTML/Prototype.pm
+t/00.load.t
+t/pod-coverage.t
+t/pod.t
+t/autocomplete_result.t
+t/autocomplete.t
+t/content_tag.t
+t/draggable_element.t
+t/drop_recieving_element.t
+Makefile.PL

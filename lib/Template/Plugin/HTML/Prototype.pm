@@ -1,17 +1,20 @@
 package Template::Plugin::HTML::Prototype;
 
-use strict;
 use warnings;
-
-our $VERSION = '0.01';
-
-use base 'Template::Plugin';
+use strict;
+use Carp;
 
 use HTML::Prototype;
+use Template::Plugin;
 
-sub new($$@) {
-	my ($prot, $context, @params) = @_;
-	return new HTML::Prototype(@params);
+our $VERSION = sprintf "%d.%02d", '$Revision: 1.3 $' =~ /(\d+)\.(\d+)/;
+
+our @ISA = qw(HTML::Prototype Template::Plugin);
+
+sub new {
+  my ($class) = shift;
+
+  return $class->SUPER::new;
 }
 
 1;
@@ -19,44 +22,103 @@ __END__
 
 =head1 NAME
 
-Template::Plugin::HTML::Prototype - Template Toolkit Plugin for the Prototype Library
+Template::Plugin::HTML::Prototype - Template Toolkit plugin for HTML::Prototype
+
 
 =head1 SYNOPSIS
 
-In a Template:
-
-    [% USE proto = HTML::Prototype %]
-
-    [% proto.define_javascript_functions %]
-    [% proto.form_remote_tag(...) %]
-    [% proto.link_to_function(...) %]
-    [% proto.link_to_remote(...) %]
-    [% proto.observe_field(...) %]
-    [% proto.observe_form(...) %]
-    [% proto.periodically_call_remote(...) %]
-    [% proto.submit_to_remote(...) %]
-
+    [% USE p = HTML.Prototype -%]
+    [% p.auto_complete_field('foo', { url      => 'http://localhost/ac',
+                                     indicator => 'bar' }) -%]
+  
 =head1 DESCRIPTION
 
-This module provides a simple interface to the Prototype JavaScript OO library for use in the Template Toolkit. 
+This module is a Template Toolkit plugin for the HTML::Prototype module.
+HTML::Prototype is a Perl wrapper around the Prototype and script.aculo.us
+Javascript libraries. This module therefore makes it easier to use
+Prototype and script.aculo.us in web pages that are generated using the
+Template Toolkit.
 
-It directly returns a L<HTML::Prototype> object, so you can call all methods there.
+=head1 INTERFACE 
 
-=head1 SEE ALSO
+This plugin acts like any other Template Toolkit Plugin. To use it,
+simply add a line like this to your template:
 
-L<HTML::Prototype>, L<Template>
+   [% USE p = HTML.Prototype -%]
 
-L<http://prototype.conio.net>
+You can then access any of the functions from HTML::Prototype using the
+object C<p>.
+
+   [% p.auto_complete_field('foo', { url      => 'http://localhost/ac',
+                                     indicator => 'bar' }) -%]
+
+For full details of the functions available, see the documentation for
+the L<HTML::Prototype> module.
+
+=head1 METHODS
+
+=head2 new
+
+Standard TT plugin constructor method.
+
+=head1 DEPENDENCIES
+
+=over 4
+
+=item *
+
+Template
+
+=item *
+
+HTML::Prototype
+
+=back
+
+You'll also need the Prototype and/or script.aculo.us Javascript libraries
+installed on your web server.
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests to
+C<bug-template-plugin-html-prototype@rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org>.
+
 
 =head1 AUTHOR
 
-Bernhard Bauer, E<lt>bauerb@in.tum.de<gt>
+Dave Cross  C<< <dave@dave.org.uk> >>
 
-=head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Bernhard Bauer
+=head1 LICENCE AND COPYRIGHT
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
+Copyright (c) 2005, Dave Cross C<< <dave@dave.org.uk> >>. All rights reserved.
 
-=cut
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself. See L<perlartistic>.
+
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
+YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
+NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE
+LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
+THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
